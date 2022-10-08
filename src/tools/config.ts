@@ -6,13 +6,15 @@ export const {
 	MAIL_PORT,
 	MAIL_PASS,
 	MAIL_USER,
-	REGION,
-	AWS_ACCESS_KEY_ID,
-	AWS_SECRET_ACCESS_KEY,
+	BASE_AUTH_URL,
+	// REGION,
+	// AWS_ACCESS_KEY_ID,
+	// AWS_SECRET_ACCESS_KEY,
 	BUCKET,
 	OBS,
 	DOMAIN
 } = process.env
+
 export const isDev = NODE_ENV === "development"
 export const cookieOptions = {
 	// maxAge: 3.154e+10,
@@ -27,11 +29,12 @@ const envs = {
 	DOMAIN,
 	MAIL_USER,
 	MONGO_URL,
-	REGION,
-	AWS_ACCESS_KEY_ID,
-	AWS_SECRET_ACCESS_KEY,
+	BASE_AUTH_URL,
 	BUCKET,
 	OBS,
+	// AWS_ACCESS_KEY_ID,
+	// AWS_SECRET_ACCESS_KEY,
+	// REGION,
 }
 const list = Object.keys(envs)
 const errors = {}

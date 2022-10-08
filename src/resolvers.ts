@@ -1,14 +1,9 @@
-import {BorrowersMutation, BorrowersQuery} from "./services/Borrowers/resolver";
+import {HelloWorldResolver} from "./services/Helloworld/resolver";
+import {NonEmptyArray} from "type-graphql/dist/interfaces/NonEmptyArray";
 
-const Mutation = {
-    ...BorrowersMutation,
-}
-const Query = {
-    ...BorrowersQuery
-};
+const resolvers:NonEmptyArray<Function> | NonEmptyArray<string> = [
+	HelloWorldResolver
+];
 
+export default resolvers;
 
-export {
-    Mutation,
-    Query,
-};
