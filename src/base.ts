@@ -19,13 +19,6 @@ enum templateName {
 	resetPassword = "resetPassword",
 }
 
-export interface Is3Params {
-	Bucket?: string, // pass your bucket name
-	Key: string, // file will be saved as testBucket/contacts.csv
-	Body: ArrayBuffer,
-	ContentType?: string
-}
-
 class Base {
 	sendMailConfig() {
 		const mailConfig = {
@@ -47,7 +40,7 @@ class Base {
 		return template(data)
 	}
 
-	sendMail(to: string | Array<IRecipient>, subject: string, TemplateName: templateName, data?: any, from?: string, attachments: Array<any> = []) {
+	sendOutMail(to: string | Array<IRecipient>, subject: string, TemplateName: templateName, data?: any, from?: string, attachments: Array<any> = []) {
 		const info = {
 			from: from || '"Deep Tech" <no-reply@verydeeptech.com>',
 			to,
@@ -61,14 +54,6 @@ class Base {
 		}).catch((e) => {
 			console.error(e, `Error ending email to ${to}`)
 		})
-	}
-
-	getPercentageOfAmount(amount: number, percentage: number) {
-		return amount * (percentage / 100)
-	}
-
-	getInstantPaymentAmount(amount: number, percentage: number) {
-		return this.getPercentageOfAmount(amount, percentage)
 	}
 
 }

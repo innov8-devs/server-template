@@ -7,6 +7,7 @@ export const {
 	MAIL_PASS,
 	MAIL_USER,
 	BASE_AUTH_URL,
+	APP_NAME,
 	// REGION,
 	// AWS_ACCESS_KEY_ID,
 	// AWS_SECRET_ACCESS_KEY,
@@ -32,6 +33,7 @@ const envs = {
 	BASE_AUTH_URL,
 	BUCKET,
 	OBS,
+	APP_NAME
 	// AWS_ACCESS_KEY_ID,
 	// AWS_SECRET_ACCESS_KEY,
 	// REGION,

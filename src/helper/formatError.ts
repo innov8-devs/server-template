@@ -1,7 +1,8 @@
-import {isDev} from "../tools/config";
+import {APP_NAME, isDev} from "../tools/config";
 import {GraphQLError, GraphQLFormattedError} from 'graphql';
-
+const Log = logger(APP_NAME as string);
 import {AuthenticationError, UserInputError, ValidationError, ForbiddenError} from 'apollo-server-express';
+import {logger} from "storejars-node-toolkit";
 
 const ErrorFormat = (err: GraphQLError): GraphQLFormattedError => {
 	if (err.originalError instanceof AuthenticationError) {
@@ -20,6 +21,7 @@ const ErrorFormat = (err: GraphQLError): GraphQLFormattedError => {
 	if (isDev) {
 		return err;
 	}
+	Log.gateway.error(err);
 	return new Error('unknown error try again later');
 };
 export default ErrorFormat
