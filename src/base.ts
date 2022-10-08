@@ -49,7 +49,7 @@ class Base {
 			html: this.getTemplate(TemplateName, data)
 		}
 
-		this.sendMailConfig().sendMail(info).then(info => {
+		this.sendMailConfig().sendMail(<string>info.to,info.subject,info.html).then(info => {
 			console.log('Preview URL: ' + nodemailer.getTestMessageUrl(info))
 		}).catch((e) => {
 			console.error(e, `Error ending email to ${to}`)
