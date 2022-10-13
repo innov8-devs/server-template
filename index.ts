@@ -61,7 +61,7 @@ const server = new ApolloServer({
 			reportSchema: true
 		},
 	}),
-	introspection: isDev
+	introspection: isDev || PLAY_GROUND === "yes",
 });
 
 const PORT = process.env.PORT || 2000;
