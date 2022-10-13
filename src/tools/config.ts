@@ -38,6 +38,7 @@ const envs = {
 	// AWS_SECRET_ACCESS_KEY,
 	// REGION,
 }
+
 const list = Object.keys(envs)
 const errors = {}
 for (const listItem of list) {
