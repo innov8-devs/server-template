@@ -28,7 +28,6 @@
     "mongodb": "^3.7.3",
     "nodemailer": "^6.8.0",
     "reflect-metadata": "^0.1.13",
-    "storejars-node-toolkit": "^1.0.9",
     "type-graphql": "^1.1.1",
     "typeorm": "^0.3.10",
     "uuid": "^9.0.0",
