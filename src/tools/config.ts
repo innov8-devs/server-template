@@ -8,22 +8,17 @@ export const {
 	MAIL_USER,
 	BASE_AUTH_URL,
 	APP_NAME,
-	// REGION,
-	// AWS_ACCESS_KEY_ID,
-	// AWS_SECRET_ACCESS_KEY,
+	REGION,
+	AWS_ACCESS_KEY_ID,
+	AWS_SECRET_ACCESS_KEY,
 	BUCKET,
 	OBS,
 	DOMAIN
 } = process.env
 
 export const isDev = NODE_ENV === "development"
-export const cookieOptions = {
-	// maxAge: 3.154e+10,
-	domain: isDev ? 'localhost' : `.${DOMAIN}`,
-	httpOnly: true
-}
+
 const envs = {
-	cookieOptions,
 	MAIL_HOST,
 	MAIL_PASS,
 	MAIL_PORT,
@@ -33,10 +28,10 @@ const envs = {
 	BASE_AUTH_URL,
 	BUCKET,
 	OBS,
-	APP_NAME
-	// AWS_ACCESS_KEY_ID,
-	// AWS_SECRET_ACCESS_KEY,
-	// REGION,
+	APP_NAME,
+	AWS_ACCESS_KEY_ID,
+	AWS_SECRET_ACCESS_KEY,
+	REGION,
 }
 
 const list = Object.keys(envs)
