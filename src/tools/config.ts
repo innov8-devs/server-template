@@ -13,7 +13,8 @@ export const {
 	AWS_SECRET_ACCESS_KEY,
 	BUCKET,
 	OBS,
-	DOMAIN
+	DOMAIN,
+  PLAY_GROUND,
 } = process.env
 
 export const isDev = NODE_ENV === "development"
@@ -32,6 +33,7 @@ const envs = {
 	AWS_ACCESS_KEY_ID,
 	AWS_SECRET_ACCESS_KEY,
 	REGION,
+	PLAY_GROUND
 }
 
 const list = Object.keys(envs)

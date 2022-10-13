@@ -2,7 +2,7 @@ require('dotenv').config()
 import express, {Application} from "express";
 import ormConfig from "./configs/Database";
 import cors from "./src/tools/cors";
-import {isDev} from "./src/tools/config";
+import { isDev, PLAY_GROUND } from './src/tools/config';
 import includeUser from "./src/helper/IncludeUser";
 import http from "http";
 import {
@@ -42,6 +42,9 @@ if (isDev) {
 	plugins.push(ApolloServerPluginLandingPageGraphQLPlayground({}))
 }
 
+if(PLAY_GROUND === "yes" && !isDev) {
+	plugins.push(ApolloServerPluginLandingPageGraphQLPlayground({}))
+}
 
 const server = new ApolloServer({
 	formatError,
