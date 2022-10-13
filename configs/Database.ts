@@ -11,7 +11,7 @@ const myDataSource = new DataSource({
   synchronize: true,
   logging: true,
   useUnifiedTopology: true,
-  entities: ["./src/Entities/**/*.ts"],
+  entities: [`${__dirname}/entities/**/*.ts`,`${__dirname}/entities/**/*.js`],
 });
 
 
