@@ -1,4 +1,4 @@
-interface User {
+interface IUser {
 	userId: string;
 	email: string;
 	verified?: boolean;

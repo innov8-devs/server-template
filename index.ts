@@ -1,3 +1,5 @@
+import { customAuthChecker } from './src/helper/AuthHandler/CustomAuthChecker';
+
 require('dotenv').config()
 import express, {Application} from "express";
 import ormConfig from "./configs/Database";
@@ -52,7 +54,8 @@ const server = new ApolloServer({
 	csrfPrevention: true,
 	cache: 'bounded',
 	schema: buildSchemaSync({
-		resolvers: resolvers
+		resolvers: resolvers,
+		authChecker: customAuthChecker,
 	}),
 	context: ({req, res}) => ({
 		req,
