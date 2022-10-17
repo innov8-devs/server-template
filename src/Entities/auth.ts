@@ -6,7 +6,7 @@ import { ObjectType, Field, ID } from "type-graphql";
 export default class Borrower extends BaseEntity {
   @Field(() => ID)
   @ObjectIdColumn()
-  _id: number;
+  _id: string;
 
   @Field(() => String)
   @Column()
