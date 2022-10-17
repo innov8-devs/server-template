@@ -1,8 +1,8 @@
-import {HelloWorldResolver} from "./services/Helloworld/resolver";
+import {AuthResolver} from "./services/auth/resolver";
 import {NonEmptyArray} from "type-graphql/dist/interfaces/NonEmptyArray";
 
 const resolvers:NonEmptyArray<Function> | NonEmptyArray<string> = [
-	HelloWorldResolver
+	AuthResolver
 ];
 
 export default resolvers;
