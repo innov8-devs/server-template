@@ -1,7 +1,7 @@
-import { isDev } from '../tools/config';
+import { isDev, PLAY_GROUND } from '../tools/config';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
-import { AuthenticationError, ForbiddenError, UserInputError, ValidationError } from 'apollo-server-express';
-import { UnauthorizedError } from 'type-graphql';
+import { AuthenticationError, UserInputError, ValidationError } from 'apollo-server-express';
+import { UnauthorizedError , ForbiddenError , ArgumentValidationError} from 'type-graphql';
 
 const ErrorFormat = (err: GraphQLError): GraphQLFormattedError => {
 	console.log(err.originalError);
@@ -9,6 +9,9 @@ const ErrorFormat = (err: GraphQLError): GraphQLFormattedError => {
 		return err;
 	}
 	if (err.originalError instanceof UserInputError) {
+		return err;
+	}
+	if (err.originalError instanceof ArgumentValidationError) {
 		return err;
 	}
 	if (err.originalError instanceof ValidationError) {
@@ -21,7 +24,7 @@ const ErrorFormat = (err: GraphQLError): GraphQLFormattedError => {
 		return err;
 	}
 	console.error(' Server Error: ', JSON.stringify(err, null, 2));
-	if (isDev) {
+	if (isDev || PLAY_GROUND === 'yes') {
 		return err;
 	}
 	return new Error('unknown error try again later');
