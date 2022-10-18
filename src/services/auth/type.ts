@@ -74,6 +74,10 @@ export class createAccountInput {
 	@Length(3, 20)
 	@Field({ description: 'user username' })
 	username: string;
+
+	@Length(10)
+	@Field({ description: 'user Telephone' , nullable: true})
+	telephone?: string;
 }
 
 
