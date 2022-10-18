@@ -1,7 +1,7 @@
 import { isDev } from '../tools/config';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
-import { AuthenticationError, ForbiddenError, UserInputError, ValidationError } from 'apollo-server-express';
-import { UnauthorizedError } from 'type-graphql';
+import { AuthenticationError, UserInputError } from 'apollo-server-express';
+import { UnauthorizedError , ForbiddenError , ArgumentValidationError} from 'type-graphql';
 
 const ErrorFormat = (err: GraphQLError): GraphQLFormattedError => {
 	console.log(err.originalError);
@@ -11,7 +11,7 @@ const ErrorFormat = (err: GraphQLError): GraphQLFormattedError => {
 	if (err.originalError instanceof UserInputError) {
 		return err;
 	}
-	if (err.originalError instanceof ValidationError) {
+	if (err.originalError instanceof ArgumentValidationError) {
 		return err;
 	}
 	if (err.originalError instanceof ForbiddenError) {
