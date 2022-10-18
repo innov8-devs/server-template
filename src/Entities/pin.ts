@@ -1,18 +1,13 @@
-import {Entity, Column, ObjectIdColumn, BaseEntity} from "typeorm";
-import { ObjectType, Field, ID } from "type-graphql";
+import { Entity, Column, ObjectIdColumn, BaseEntity, ObjectID } from 'typeorm';
 
 @Entity()
-@ObjectType()
-export default class Pin extends BaseEntity {
-	@Field(() => ID)
+export class Pin extends BaseEntity {
 	@ObjectIdColumn()
-	_id: number;
+	_id: string;
 
-	@Field(() => String)
 	@Column({length: 4})
 	pin: number;
 
-	@Field(() => ID)
 	@ObjectIdColumn()
-	userId: string;
+	userId: ObjectID;
 }
