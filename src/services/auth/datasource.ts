@@ -8,7 +8,7 @@ class AuthDatasource extends Base {
 			axiosBase.post('/login', user).then((data)=>{
 			   resolve(data.data)
 			}).catch((e)=>{
-				reject(new AuthenticationError(e.response.data.message))
+				reject(new AuthenticationError(e?.response?.data?.message))
 			})
 		})
 	}
@@ -19,7 +19,7 @@ class AuthDatasource extends Base {
 				console.log(data.data);
 				resolve("Account created successfully")
 			}).catch((e)=>{
-				reject(new AuthenticationError(e.response.data.message))
+				reject(new AuthenticationError(e?.response?.data?.message))
 			})
 		})
 	}
@@ -30,17 +30,18 @@ class AuthDatasource extends Base {
 				resolve(data.data)
 			}).catch((e)=>{
 				console.log(e.response);
-				reject(new AuthenticationError(e.response.data.message))
+				reject(new AuthenticationError(e?.response?.data?.message))
 			})
 		})
 	}
 
 	async updateUserAccount(data:any) {
 		return new Promise(async (resolve, reject) => {
+			console.log(data);
 			axiosBase.post('/update-account', data).then((data)=>{
 				resolve(data.data)
 			}).catch((e)=>{
-				reject(new AuthenticationError(e.response.data.message))
+				reject(new AuthenticationError(e?.response?.data?.message))
 			})
 		})
 	}
@@ -50,7 +51,7 @@ class AuthDatasource extends Base {
 			axiosBase.post('/update-password', data).then((data)=>{
 				resolve(data.data)
 			}).catch((e)=>{
-				reject(new AuthenticationError(e.response.data.message))
+				reject(new AuthenticationError(e?.response?.data?.message))
 			})
 		})
 	}
@@ -60,7 +61,7 @@ class AuthDatasource extends Base {
 			axiosBase.post('/reset-password', data).then((data)=>{
 				resolve(data.data)
 			}).catch((e)=>{
-				reject(new AuthenticationError(e.response.data.message))
+				reject(new AuthenticationError(e?.response?.data?.message))
 			})
 		})
 	}
@@ -70,7 +71,7 @@ class AuthDatasource extends Base {
 			axiosBase.post('/disable-account', data).then((data)=>{
 				resolve(data.data)
 			}).catch((e)=>{
-				reject(new AuthenticationError(e.response.data.message))
+				reject(new AuthenticationError(e?.response?.data?.message))
 			})
 		})
 	}

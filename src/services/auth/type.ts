@@ -2,14 +2,14 @@ import { Field, InputType, ObjectType, registerEnumType } from 'type-graphql';
 import { IsEmail, Length } from 'class-validator';
 
 enum Gender {
-	male ,
-	female,
-	others
+	male= "male" ,
+	female = "female",
+	others = "others",
 }
 
  enum Services  {
-	highTable,
-	hiPay
+	highTable="highTable" ,
+	hiPay = "hiPay",
 }
 
 registerEnumType(Gender, {
