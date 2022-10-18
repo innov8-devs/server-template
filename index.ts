@@ -25,6 +25,9 @@ const Origins: Array<string> = ["https://highypay.com", "https://www.highpay.com
 if (isDev) {
 	Origins.push(...devOrigins)
 }
+if(PLAY_GROUND === 'yes'){
+	Origins.push('http://localhost:3002', 'http://localhost:3000')
+}
 
 // initializing express
 const app: Application = express();
