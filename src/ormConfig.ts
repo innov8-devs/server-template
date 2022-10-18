@@ -1,9 +1,9 @@
 import { DataSource } from "typeorm";
-import {MONGO_URL} from "../src/tools/config";
+import {MONGO_URL} from "./tools/config";
 // Using environment variables
 import dotenv from "dotenv";
-dotenv.config();
 
+dotenv.config();
 const myDataSource = new DataSource({
   type: "mongodb",
   url: MONGO_URL,
@@ -11,7 +11,7 @@ const myDataSource = new DataSource({
   synchronize: true,
   logging: true,
   useUnifiedTopology: true,
-  entities: [`${__dirname}/entities/**/*.ts`,`${__dirname}/entities/**/*.js`],
+  entities: [`${__dirname}/Entities/**/*.ts`,`${__dirname}/Entities/**/*.js`],
 });
 
 

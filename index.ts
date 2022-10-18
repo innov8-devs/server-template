@@ -2,7 +2,7 @@ import { customAuthChecker } from './src/helper/AuthHandler/CustomAuthChecker';
 
 require('dotenv').config()
 import express, {Application} from "express";
-import ormConfig from "./configs/Database";
+import ormConfig from "./src/ormConfig";
 import cors from "./src/tools/cors";
 import { isDev, PLAY_GROUND } from './src/tools/config';
 import includeUser from "./src/helper/IncludeUser";
