@@ -13,7 +13,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		}
 		const decoded = jwt.verify(AUTH_TOKEN, JWT_SECRET);
 		axiosBase.defaults.headers.common['userid'] = decoded.userId;
-		console.log(decoded);
+		console.log(decoded, "decoded");
 		req.user = decoded;
 		return next();
 	} catch (e) {
