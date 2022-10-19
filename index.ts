@@ -21,7 +21,7 @@ import resolvers from "./src/resolvers";
 ormConfig()
 
 const devOrigins: Array<string> = ["http://localhost:3002"]
-const Origins: Array<string> = ["https://highypay.com", "https://www.highpay.com", "https:/bills.highpay.com"]
+const Origins: Array<string> = ["https://highypay.com", "https://www.highpay.com", "https://gateway-dev.hipay.finance"]
 if (isDev) {
 	Origins.push(...devOrigins)
 }
