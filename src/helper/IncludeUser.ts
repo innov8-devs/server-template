@@ -9,9 +9,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		req.user = undefined;
 		return next();
 	}
-	const token = AUTH_TOKEN.split(' ')[1];
 	try {
-		const decoded = jwt.verify(token, JWT_SECRET);
+		const decoded = jwt.verify(AUTH_TOKEN, JWT_SECRET);
 		axiosBase.defaults.headers.common['userid'] = decoded.userId;
 		console.log(decoded);
 		req.user = decoded;
