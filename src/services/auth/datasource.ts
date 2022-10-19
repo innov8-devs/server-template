@@ -26,7 +26,6 @@ class AuthDatasource extends Base {
 	async getCurrentUser() {
 		return new Promise(async (resolve, reject) => {
 			axiosBase.get('/profile').then((data)=>{
-
 				resolve(data.data)
 			}).catch((e)=>{
 				console.log(e.response);
