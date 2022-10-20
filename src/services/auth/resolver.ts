@@ -6,7 +6,7 @@ import {
 	loginInput,
 	loginOutput,
 	resetPasswordInput,
-	updateAccountInput,
+	updateAccountInput, updatePasswordInput,
 	userProfile
 } from './type';
 
@@ -36,7 +36,7 @@ export class AuthResolver extends AuthDatasource {
 
 	@Authorized()
 	@Mutation(() => String)
-	async updatePassword(@Arg('data') data: updateAccountInput) {
+	async updatePassword(@Arg('data') data: updatePasswordInput) {
 		return this.updateUserPassword(data);
 	}
 
