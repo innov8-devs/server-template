@@ -7,16 +7,12 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
 	try {
 		const AUTH_TOKEN = req.headers.authorization;
-		console.log(AUTH_TOKEN, 1);
 		if (!AUTH_TOKEN) {
 			req.user = undefined;
 			return next();
 		}
-		console.log(AUTH_TOKEN, 2);
 		const decoded = jwt.verify(AUTH_TOKEN, JWT_SECRET);
-		console.log(AUTH_TOKEN, 2, decoded);
 		axiosBase.defaults.headers.common['userid'] = decoded.userId;
-		console.log(decoded, "decoded");
 		req.user = decoded;
 		return next();
 	} catch (e) {
