@@ -75,6 +75,16 @@ class AuthDatasource extends Base {
 		})
 	}
 
+	async userForgotPassword(data:any) {
+		return new Promise(async (resolve, reject) => {
+			axiosBase.post(`/forgot-password?email=${data}`).then((data)=>{
+				resolve(data.data)
+			}).catch((e)=>{
+				reject(new AuthenticationError(e?.response?.data?.message))
+			})
+		})
+	}
+
 }
 
 
