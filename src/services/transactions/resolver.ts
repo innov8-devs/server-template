@@ -6,7 +6,7 @@ import { walletToWalletTransferInput } from './type';
 export class TransactionsResolver extends TransactionsDatasource {
 	@Authorized()
 	@Mutation(() => String)
-	createUserWallet(@Arg('pin') pin: number, @Ctx() ctx: MyContext) {
+	createUserWallet(@Ctx() ctx: MyContext) {
 		return this.createWallet(ctx.req.user?.userId as string);
 	}
 
