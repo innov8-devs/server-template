@@ -16,7 +16,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		req.user = decoded;
 		return next();
 	} catch (e) {
-		console.log(e);
 		req.user = undefined;
 		return next();
 	}
