@@ -53,7 +53,7 @@ export class AuthResolver extends AuthDatasource {
 	}
 
 	@Mutation(() => String)
-	async forgotPassword(@Arg('data') email: string) {
+	async forgotPassword(@Arg('email') email: string) {
 		return this.userForgotPassword(email);
 	}
 
