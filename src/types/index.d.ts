@@ -4,3 +4,5 @@ interface IUser {
 	verified?: boolean;
 	verifiedAt?: Date;
 }
+
+type PLAY_GROUND_MODE = "yes" | "no"
