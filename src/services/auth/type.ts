@@ -90,10 +90,12 @@ export class createAccountInput {
 	@Field({ description: 'user Telephone', nullable: true })
 	telephone?: string;
 	
-	@Length(10)
 	@Authorized('HiTable')
-	@Field({ description: 'user Telephone', nullable: true })
+	@Field({ description: 'user role for masters', nullable: true })
 	role?: string;
+	
+	@Field({ description: 'user country' })
+	country?: string;
 }
 
 
