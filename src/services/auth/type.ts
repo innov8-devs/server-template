@@ -94,7 +94,7 @@ export class createAccountInput {
 	@Field({ description: 'user role for masters', nullable: true })
 	role?: string;
 	
-	@Field({ description: 'user country' })
+	@Field({ description: 'user country', nullable: true })
 	country?: string;
 }
 
