@@ -12,6 +12,7 @@ class MasterDatasource extends Base {
 		const country = await new UtilsDatasource().getACountry(addonWalletCountryId.toString());
 		if (!country) throw new ValidationError('Unable to validate country');
 		if(!country.isActive) throw new ValidationError('Country is not active');
+		
 		const walletCountryIdObjectId = new ObjectId(walletCountryId) as unknown as ObjectID;
 		const addonWalletCountryIdObjectId = new ObjectId(addonWalletCountryId) as unknown as ObjectID;
 		
@@ -37,13 +38,21 @@ class MasterDatasource extends Base {
 	async getAvailableWalletServicesForUsers() {
 		const user = await new AuthDatasource().getCurrentUser();
 		if(!user.country) throw new ValidationError('Update your profile to continue');
+		
 		const walletSettings = await MastersWalletSetting.findOneBy({
 			walletCountryId: user.country._id,
 			addonWalletCountryId: user.country._id
 		});
+		
 		if(!walletSettings) throw new ValidationError('Wallet settings not found');
-		return walletSettings.allowedServices;
+		
+		return walletSettings;
 	}
+	
+	
+	
+	
+	
 }
 
 
