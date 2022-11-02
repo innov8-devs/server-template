@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import axiosBase from './axiosBase';
 
 export default async (req: Request, res: Response, next: NextFunction) => {
-
 	try {
 		const AUTH_TOKEN = req.headers.authorization;
 		if (!AUTH_TOKEN) {

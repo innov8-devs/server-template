@@ -1,6 +1,7 @@
 import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql';
 import AuthDatasource from './datasource';
 import {
+	adminCreateAccountInput,
 	createAccountInput,
 	disableAccountInput,
 	loginInput,
@@ -12,7 +13,7 @@ import {
 
 @Resolver()
 export class AuthResolver extends AuthDatasource {
-	@Authorized()
+	@Authorized("vendor", "customer", "HiTable")
 	@Query(() => userProfile)
 	getCurrentlyLoggedInUser() {
 		return this.getCurrentUser();
@@ -27,14 +28,20 @@ export class AuthResolver extends AuthDatasource {
 	async createUser(@Arg('data') data: createAccountInput) {
 		return this.createNewAccount(data);
 	}
-
-	@Authorized()
+	
+	@Authorized( "HiTable")
+	@Mutation(() => String)
+	async adminAdminAccount(@Arg('data') data: adminCreateAccountInput) {
+		return this.createUser(data);
+	}
+	
+	@Authorized("vendor", "customer", "HiTable")
 	@Mutation(() => String)
 	async updateUser(@Arg('data') data: updateAccountInput) {
 		return this.updateUserAccount(data);
 	}
-
-	@Authorized()
+	
+	@Authorized("vendor", "customer", "HiTable")
 	@Mutation(() => String)
 	async updatePassword(@Arg('data') data: updatePasswordInput) {
 		return this.updateUserPassword(data);

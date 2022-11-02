@@ -8,6 +8,9 @@ export class wallet extends BaseEntity {
 	@Column({default: 0})
 	balance: number;
 
+	@Column()
+	walletType: string;
+	
 	@ObjectIdColumn()
 	userId: ObjectID;
 }
