@@ -16,14 +16,13 @@ class AuthDatasource extends Base {
 	async createNewAccount(data:any) {
 		return new Promise(async (resolve, reject) => {
 			axiosBase.post('/', data).then((data)=>{
-				console.log(data.data);
 				resolve("Account created successfully")
 			}).catch((e)=>{
 				reject(new AuthenticationError(e?.response?.data?.message))
 			})
 		})
 	}
-	async getCurrentUser() {
+	async getCurrentUser():Promise<any> {
 		return new Promise(async (resolve, reject) => {
 			axiosBase.get('/profile').then((data)=>{
 				resolve(data.data)
@@ -36,7 +35,6 @@ class AuthDatasource extends Base {
 
 	async updateUserAccount(data:any) {
 		return new Promise(async (resolve, reject) => {
-			console.log(data);
 			axiosBase.post('/update-account', data).then((data)=>{
 				resolve(data.data)
 			}).catch((e)=>{

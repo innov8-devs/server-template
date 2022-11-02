@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 
 class SecurityDatasource extends Base {
 	async createTransactionPin(pin: number, userId: string) {
-		const oldPin = await Pin.findOneBy({ userId: new ObjectId(userId) });
+		const oldPin = await Pin.findOneBy({ userId: new ObjectId(userId) as unknown as ObjectID });
 		if (!oldPin) {
 			const newPin = new Pin();
 			newPin.pin = pin;
