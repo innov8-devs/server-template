@@ -3,8 +3,6 @@ import UtilsDatasource from '../utils/datasource';
 import AuthDatasource from '../auth/datasource';
 import { createWalletTypeInput } from './input.type';
 import { ValidationError } from 'apollo-server-express';
-import { ObjectId } from 'mongodb';
-import { ObjectID } from 'typeorm';
 import __MastersWalletSettings from '../../model/mastersWalletSetting/mastersWalletSetting.model';
 
 class MasterDatasource extends Base {
@@ -32,16 +30,13 @@ class MasterDatasource extends Base {
 	
 	async getAvailableWalletServicesForUsers() {
 		const user = await new AuthDatasource().getCurrentUser();
-		console.log(user);
 		if(!user.country) throw new ValidationError('Update your profile to continue');
 		
-		const walletSettings = await __MastersWalletSettings.findOne({
+		const walletSettings = await __MastersWalletSettings.find({
 			walletCountryId: user.country
 		});
 		
-		console.log(walletSettings);
-		
-		if(!walletSettings) throw new ValidationError('unable to validate Wallet services contact customer support');
+		if(walletSettings.length === 0) throw new ValidationError('unable to validate Wallet services contact customer support');
 		
 		return walletSettings;
 	}

@@ -12,7 +12,7 @@ export class MastersResolver extends MasterDatasource {
 	}
 	
 	@Authorized('HiTable', 'vendor', 'customer', 'admin')
-	@Query(() => ActiveWalletServices)
+	@Query(() => [ActiveWalletServices])
 	getAvailableWalletServicesForUser() {
 		return this.getAvailableWalletServicesForUsers();
 	}
