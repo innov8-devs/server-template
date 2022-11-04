@@ -53,7 +53,7 @@ export class AuthResolver extends AuthDatasource {
 		return this.resetUserPassword(data);
 	}
 
-	@Authorized()
+	@Authorized('vendor', 'customer')
 	@Mutation(() => String)
 	async disableAccount(@Arg('data') data: disableAccountInput) {
 		return this.disableUserAccount(data);

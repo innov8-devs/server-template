@@ -1,8 +1,10 @@
 import { Field, InputType, registerEnumType } from 'type-graphql';
-import { allowedServices } from '../../Entities/mastersWalletSetting';
+import { allowedWalletServices } from '../../model/mastersWalletSetting/mastersWalletSetting.type';
 
 
-registerEnumType(allowedServices, {
+
+
+registerEnumType(allowedWalletServices, {
 	name: 'allowedServices',
 	description: 'Allowed services for wallet'
 });
@@ -16,6 +18,6 @@ export class createWalletTypeInput {
 	@Field({ description: 'Addon wallet' })
 	addonWalletCountryId: string;
 	
-	@Field(()=>[allowedServices], { description: 'WalletType description' })
-	allowedServices: [allowedServices];
+	@Field(()=>[allowedWalletServices], { description: 'WalletType description' })
+	allowedServices: [allowedWalletServices];
 }

@@ -1,8 +1,8 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, ID, ObjectType } from 'type-graphql';
 
 @ObjectType({ description: 'Countries List' })
 export class countries {
-	@Field({ description: 'Countries Id' })
+	@Field(() => ID, { description: 'Countries Id' })
 	_id: string;
 	
 	@Field({ description: 'Countries fullname' })
@@ -12,13 +12,13 @@ export class countries {
 	isActive: boolean;
 	
 	@Field({ description: 'Country currency title in words' })
-	currency: string
+	currency: string;
 	
 	@Field({ description: 'Country currency code', nullable: true })
-	currencyCode?: string
+	currencyCode?: string;
 	
 	@Field({ description: 'Country currency symbol' })
-	currencySymbol:string
+	currencySymbol: string;
 	
 	@Field({ description: 'Country created date' })
 	createdAt: Date;

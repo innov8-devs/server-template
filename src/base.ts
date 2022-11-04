@@ -8,7 +8,8 @@ import {
 } from './tools/config'
 import * as path from 'path'
 import ejs from 'ejs'
-import { allowedServices, AllowedWalletServices } from './Entities/mastersWalletSetting';
+import { AllowedWalletServices } from './services/masters/type';
+import { allowedWalletServices } from './model/mastersWalletSetting/mastersWalletSetting.type';
 
 
 interface IRecipient {
@@ -41,8 +42,8 @@ class Base {
 		return template(data)
 	}
 	
-	walletSettingsMapper(allowedServices: Array<allowedServices>):Array<AllowedWalletServices> {
-		const serviceList = ['transfer', 'withdraw', 'swapFunds', 'deposit', 'accountNumber', 'pay'] as unknown as allowedServices[];
+	walletSettingsMapper(allowedServices: Array<allowedWalletServices>):Array<AllowedWalletServices> {
+		const serviceList = ['transfer', 'withdraw', 'swapFunds', 'deposit', 'accountNumber', 'pay'] as allowedWalletServices[];
 		return serviceList.map((value)=> {
 			const allowed = allowedServices.find((service) => value === service)
 			return {

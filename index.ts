@@ -1,5 +1,4 @@
 import { customAuthChecker } from './src/helper/AuthHandler/CustomAuthChecker';
-
 require('dotenv').config()
 import express, {Application} from "express";
 import ormConfig from "./src/ormConfig";
@@ -16,8 +15,9 @@ import {ApolloServer} from "apollo-server-express";
 import formatError from "./src/helper/formatError";
 import {buildSchemaSync} from "type-graphql";
 import resolvers from "./src/resolvers";
+import MongoConfig from './src/config/mongoConfig';
 
-
+new MongoConfig().connect();
 ormConfig()
 
 const devOrigins: Array<string> = ["http://localhost:3002"]
