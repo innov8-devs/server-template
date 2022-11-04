@@ -16,7 +16,7 @@ const masters_wallet_setting = new Schema<IMasterWalletDocument>({
 	walletCurrencyName: { type: String, required: true, index: true },
 	walletCountryId: { type: Schema.Types.ObjectId, required: true, index: true },
 	addonWalletCountryId: { type: Schema.Types.ObjectId, required: true, index: true },
-	allowedWalletServices: [allowedWalletServices],
+	allowedServices: [allowedWalletServices],
 	disabled: { type: Boolean, default: false },
 }, {
 	timestamps: true,
