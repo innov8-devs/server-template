@@ -24,7 +24,7 @@ export interface IMastersWalletSetting {
 	walletCurrencyName: string;
 	walletCountryId: ObjectId;
 	addonWalletCountryId: ObjectId;
-	allowedWalletServices: Array<allowedWalletServices>;
+	allowedServices: Array<allowedWalletServices>;
 	disabled: boolean;
 }
 
