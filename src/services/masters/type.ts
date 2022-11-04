@@ -20,7 +20,7 @@ export class ActiveWalletServices {
 	walletCurrency: string
 	
 	@Field({ description: 'Wallet wallet Currency Code' })
-	walletCurrencyCode
+	walletCurrencyCode: string
 	
 	@Field({ description: 'Wallet wallet Currency Symbol' })
 	walletCurrencySymbol: string

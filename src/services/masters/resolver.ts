@@ -1,6 +1,7 @@
 import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql';
 import MasterDatasource from './datasource';
 import { createWalletTypeInput } from './input.type';
+import { ActiveWalletServices } from './type';
 
 @Resolver()
 export class MastersResolver extends MasterDatasource {
@@ -11,7 +12,7 @@ export class MastersResolver extends MasterDatasource {
 	}
 	
 	@Authorized('HiTable', 'vendor', 'customer', 'admin')
-	@Query(() => String)
+	@Query(() => [ActiveWalletServices])
 	getAvailableWalletServicesForUser() {
 		return this.getAvailableWalletServicesForUsers();
 	}
