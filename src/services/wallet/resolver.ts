@@ -23,7 +23,6 @@ export class WalletResolver extends TransactionsDatasource {
 			walletCurrencyCode: currencyCode
 		}
 		return this.getWalletBalance(data);
-		// return this.getWalletBalance(ctx.req.user?.userId as string);
 	}
 	
 	

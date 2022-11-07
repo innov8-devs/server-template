@@ -4,6 +4,7 @@ import AuthDatasource from '../auth/datasource';
 import { createWalletTypeInput } from './input.type';
 import { ValidationError } from 'apollo-server-express';
 import __MastersWalletSettings from '../../model/mastersWalletSetting/mastersWalletSetting.model';
+import { IMastersWalletSetting } from '../../model/mastersWalletSetting/mastersWalletSetting.type';
 
 class MasterDatasource extends Base {
 	async createNewWalletCurrency({ walletCountryId, addonWalletCountryId, allowedServices }: createWalletTypeInput) {
@@ -41,7 +42,7 @@ class MasterDatasource extends Base {
 		return walletSettings;
 	}
 	
-	async getAvailableWalletServicesForUsersByCurrencyCode(code: string) {
+	async getAvailableWalletServicesForUsersByCurrencyCode(code: string):Promise<IMastersWalletSetting> {
 		const user = await new AuthDatasource().getCurrentUser();
 		if(!user.country) throw new ValidationError('Update your profile to continue');
 		
@@ -55,6 +56,5 @@ class MasterDatasource extends Base {
 		return walletSettings;
 	}
 }
-
 
 export default MasterDatasource;

@@ -18,6 +18,12 @@ export class AuthResolver extends AuthDatasource {
 	getCurrentlyLoggedInUser() {
 		return this.getCurrentUser();
 	}
+	
+	@Authorized("vendor", "customer", "HiTable")
+	@Query(() => userProfile)
+	getInformationUsingUsername(@Arg("username") username: string) {
+		return this.getUserInformationUsingUsername(username);
+	}
 
 	@Mutation(() => loginOutput)
 	async login(@Arg('data') data: loginInput) {

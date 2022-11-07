@@ -10,6 +10,7 @@ import * as path from 'path'
 import ejs from 'ejs'
 import { AllowedWalletServices } from './services/masters/type';
 import { allowedWalletServices } from './model/mastersWalletSetting/mastersWalletSetting.type';
+import BaseWallet from './services/wallet/BaseWallet';
 
 
 interface IRecipient {
@@ -21,7 +22,7 @@ enum templateName {
 	resetPassword = "resetPassword",
 }
 
-class Base {
+class Base extends BaseWallet {
 	sendMailConfig() {
 		const mailConfig = {
 			host: MAIL_HOST,
@@ -51,7 +52,6 @@ class Base {
 				enabled: !!allowed
 			}
 		})
-		
 	}
 	
 

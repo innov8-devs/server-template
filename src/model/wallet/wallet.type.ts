@@ -1,10 +1,14 @@
 import { ObjectId } from 'mongoose';
 
-interface WalletType {
-	_id: ObjectId;
-	balance: number;
-	walletType: string;
-	userId: ObjectId;
+export interface IWallet {
+	balance: number
+	walletCurrencyCode: string;
+	walletCurrencySymbol: string;
+	walletCurrencyName: string;
+	userId: ObjectId
+	isActive: boolean;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
-interface WalletTypeDocument extends WalletType, Document {}
+export interface IWalletTypeDocument extends IWallet, Document {}

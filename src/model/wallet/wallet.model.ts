@@ -1,8 +1,8 @@
 import { model, Schema } from 'mongoose';
-import { IMasterWalletDocument } from '../mastersWalletSetting/mastersWalletSetting.type';
+import { IWallet, IWalletTypeDocument } from './wallet.type';
 
 
-const wallet = new Schema<IMasterWalletDocument>({
+const wallet = new Schema<IWalletTypeDocument>({
 	balance: { type: Number, default: 0 },
 	walletCurrencyCode: { type: String, required: true, uniques: true },
 	walletCurrencySymbol: { type: String, required: true },
@@ -13,4 +13,4 @@ const wallet = new Schema<IMasterWalletDocument>({
 	timestamps: true,
 })
 
-export default model<IMasterWalletDocument>('Wallet', wallet);
+export default model<IWallet>('Wallet', wallet);
