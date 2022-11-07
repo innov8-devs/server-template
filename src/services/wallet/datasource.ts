@@ -19,9 +19,7 @@ class walletDatasource extends Base {
 		return 'Wallet created';
 	}
 	async getWalletBalance({userId, walletCurrencyCode}: { userId: string, walletCurrencyCode: string }) {
-		const userWallet = await __Wallet.findOne({ userId: userId, walletCurrencyCode });
-		if (!userWallet) return Promise.reject('Wallet does not exist');
-		return userWallet.balance;
+		return await this.getWalletBase({userId, walletCurrencyCode});
 	}
 }
 

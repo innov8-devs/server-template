@@ -55,6 +55,21 @@ class AuthDatasource extends Base {
 			})
 		})
 	}
+	
+	async getUserInformationUsingUsername(username:string) {
+		return new Promise(async (resolve, reject) => {
+			axiosBase.get(`/get-user-information-using-username`,{
+				params: {
+					username
+				}
+			}).then((data)=>{
+				resolve(data.data)
+			}).catch((e)=>{
+				console.log(e.response);
+				reject(new AuthenticationError(e?.response?.data?.message))
+			})
+		})
+	}
 
 	async resetUserPassword(data:any) {
 		return new Promise(async (resolve, reject) => {
