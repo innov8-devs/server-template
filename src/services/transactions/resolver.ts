@@ -4,12 +4,6 @@ import { walletToWalletTransferInput } from './type';
 
 @Resolver()
 export class TransactionsResolver extends TransactionsDatasource {
-
-	@Authorized('vendor', 'customer', 'HiTable')
-	@Query(() => Number)
-	getUserWalletBalance(@Ctx() ctx: MyContext) {
-		return this.getWalletBalance(ctx.req.user?.userId as string);
-	}
 	
 	// @Authorized('vendor', 'customer', 'HiTable')
 	// @Mutation(() => String)

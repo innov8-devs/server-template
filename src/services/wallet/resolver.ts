@@ -15,11 +15,18 @@ export class TransactionsResolver extends TransactionsDatasource {
 	}
 	
 	
-	@Authorized()
+	@Authorized('vendor', 'customer', 'HiTable')
 	@Query(() => Number)
-	getUserWalletBalance(@Ctx() ctx: MyContext) {
+	getUserWalletBalance(@Ctx() ctx: MyContext, @Arg('currencyCode') currencyCode: string) {
+		const data = {
+			userId: ctx.req.user?.userId as string,
+			walletCurrencyCode: currencyCode
+		}
+		return this.getWalletBalance(data);
 		// return this.getWalletBalance(ctx.req.user?.userId as string);
 	}
+	
+	
 
 	@Authorized()
 	@Mutation(() => String)
