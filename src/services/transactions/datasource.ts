@@ -45,19 +45,6 @@ class transactionsDatasource extends Base {
 		// return newTransaction;
 	}
 	
-	async createWallet({userId, walletCurrencyCode}: { userId: string, walletCurrencyCode: string }) {
-		const masterWalletSettings = await new MasterDatasource().getAvailableWalletServicesForUsersByCurrencyCode(walletCurrencyCode);
-		if(!masterWalletSettings) throw new ValidationError('Unable to validate currency')
-		const userWallet = await __Wallet.findOne({ userId: userId, walletCurrencyCode });
-		if (userWallet) return Promise.reject('Wallet already exists');
-		await __Wallet.create({
-			userId,
-			walletCurrencyCode,
-			balance: 0,
-		});
-		return 'Wallet created';
-	}
-	
 	async getWalletBalance(userId: string) {
 	
 	}
