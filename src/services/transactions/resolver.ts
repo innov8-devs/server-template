@@ -4,33 +4,37 @@ import { walletToWalletTransferInput } from './type';
 
 @Resolver()
 export class TransactionsResolver extends TransactionsDatasource {
-	@Authorized()
+	@Authorized('vendor', 'customer', 'HiTable')
 	@Mutation(() => String)
-	createUserWallet(@Ctx() ctx: MyContext) {
-		return this.createWallet(ctx.req.user?.userId as string);
+	createUserWallet(@Ctx() ctx: MyContext, @Arg('currencyCode') currencyCode: string) {
+		const data = {
+			userId: ctx.req.user?.userId as string,
+			walletCurrencyCode: currencyCode
+		};
+		return this.createWallet(data);
 	}
-
-	@Authorized()
+	
+	@Authorized('vendor', 'customer', 'HiTable')
 	@Query(() => Number)
 	getUserWalletBalance(@Ctx() ctx: MyContext) {
 		return this.getWalletBalance(ctx.req.user?.userId as string);
 	}
-
-	@Authorized()
-	@Mutation(() => String)
-	makeWalletToWalletTransfer(@Arg('data') data: walletToWalletTransferInput, @Ctx() ctx: MyContext) {
-		return this.walletToWalletTransfer(data, ctx.req.user?.userId as string);
-	}
-
-	@Authorized()
+	
+	// @Authorized('vendor', 'customer', 'HiTable')
+	// @Mutation(() => String)
+	// makeWalletToWalletTransfer(@Arg('data') data: walletToWalletTransferInput, @Ctx() ctx: MyContext) {
+	// 	return this.walletToWalletTransfer(data, ctx.req.user?.userId as string);
+	// }
+	
+	@Authorized('vendor', 'customer', 'HiTable')
 	@Mutation(() => String)
 	fundWallet(@Arg('amount') amount: number, @Arg('pin') pin: number, @Ctx() ctx: MyContext) {
 		return this.fundWalletWithStripePaymentLink(ctx.req.user?.userId as string, amount, pin);
 	}
-
-	@Authorized()
+	
+	@Authorized('vendor', 'customer', 'HiTable')
 	@Mutation(() => String)
 	getTransactionHistory(@Ctx() ctx: MyContext) {
-
+	
 	};
 }

@@ -19,14 +19,18 @@ export interface IAllowedWalletServices {
 
 export interface IMastersWalletSetting {
 	walletCurrency: string;
+	userId: ObjectId;
 	walletCurrencyCode: string;
+	balance: number;
 	walletCurrencySymbol: string;
 	walletCurrencyName: string;
 	walletCountryId: ObjectId;
 	addonWalletCountryId: ObjectId;
 	allowedServices: Array<allowedWalletServices>;
 	disabled: boolean;
+	isActive: boolean;
 }
 
 
-export interface IMasterWalletDocument extends IMastersWalletSetting, Document {}
+export interface IMasterWalletDocument extends IMastersWalletSetting, Document {
+}

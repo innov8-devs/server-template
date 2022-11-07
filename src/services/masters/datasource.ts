@@ -41,6 +41,19 @@ class MasterDatasource extends Base {
 		return walletSettings;
 	}
 	
+	async getAvailableWalletServicesForUsersByCurrencyCode(code: string) {
+		const user = await new AuthDatasource().getCurrentUser();
+		if(!user.country) throw new ValidationError('Update your profile to continue');
+		
+		const walletSettings = await __MastersWalletSettings.findOne({
+			walletCountryId: user.country,
+			walletCurrencyCode: code
+		});
+		
+		if(!walletSettings) throw new ValidationError('unable to validate Wallet services contact customer support');
+		
+		return walletSettings;
+	}
 }
 
 
