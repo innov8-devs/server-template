@@ -1,18 +1,28 @@
-import { Field, InputType } from 'type-graphql';
-import { Length } from 'class-validator';
+import { Field, ObjectType } from 'type-graphql';
 
-
-@InputType({ description: 'Wallet to Wallet transfer parameters' })
-export class walletToWalletTransferInput {
-	@Length(1)
-	@Field({ description: 'Transfer amount' })
-	amount: number;
-
-	@Field({ description: 'recipient user id' })
-	recipient: string;
-
-	@Field({ description: 'Transaction pin of sender' })
-	pinNumber: number;
+@ObjectType()
+export class WalletType {
+	@Field({ description: 'Wallet id' })
+	_id: string;
+	
+	@Field({ description: 'Wallet balance' })
+	balance: number;
+	
+	@Field({ description: 'Wallet currency code' })
+	walletCurrencyCode: string;
+	
+	@Field({ description: 'Wallet currency symbol' })
+	walletCurrencySymbol: string;
+	
+	@Field({ description: 'Wallet currency name' })
+	walletCurrencyName: string;
+	
+	@Field({ description: 'Wallet status' })
+	isActive: boolean;
+	
+	@Field({ description: 'Wallet creation date' })
+	createdAt: Date;
+	
+	@Field({ description: 'Wallet last update date' })
+	updatedAt: Date;
 }
-
-

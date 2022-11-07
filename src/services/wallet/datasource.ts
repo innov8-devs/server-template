@@ -19,7 +19,16 @@ class walletDatasource extends Base {
 		return 'Wallet created';
 	}
 	async getWalletBalance({userId, walletCurrencyCode}: { userId: string, walletCurrencyCode: string }) {
-		return await this.getWalletBase({userId, walletCurrencyCode});
+		const wallet = await this.getWalletBase({userId, walletCurrencyCode});
+		return wallet.balance;
+	}
+	
+	async getWalletDetails({userId, walletCurrencyCode}: { userId: string, walletCurrencyCode: string }) {
+		return this.getWalletBase({userId, walletCurrencyCode});
+	}
+	
+	async getAllWallet({userId}: { userId: string }) {
+		return __Wallet.find({ userId });
 	}
 }
 

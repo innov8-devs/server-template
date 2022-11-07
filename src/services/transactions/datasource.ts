@@ -5,7 +5,7 @@ import * as Crypto from 'crypto';
 import AuthDatasource from '../auth/datasource';
 import { allowedWalletServices } from '../../model/mastersWalletSetting/mastersWalletSetting.type';
 import MasterDatasource from '../masters/datasource';
-import { walletToWalletTransferInput } from '../wallet/type';
+import { walletToWalletTransferInput } from '../wallet/input.type';
 import __Pin from '../../model/security/pin.model';
 
 class transactionsDatasource extends Base {

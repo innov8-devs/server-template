@@ -1,9 +1,11 @@
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import TransactionsDatasource from './datasource';
-import { walletToWalletTransferInput } from './type';
+import { walletToWalletTransferInput } from './input.type';
+import { WalletType } from './type';
 
 @Resolver()
 export class WalletResolver extends TransactionsDatasource {
+	
 	@Authorized('vendor', 'customer', 'HiTable')
 	@Mutation(() => String)
 	createUserWallet(@Ctx() ctx: MyContext, @Arg('currencyCode') currencyCode: string) {
@@ -14,9 +16,8 @@ export class WalletResolver extends TransactionsDatasource {
 		return this.createWallet(data);
 	}
 	
-	
-	@Authorized('vendor', 'customer', 'HiTable')
 	@Query(() => Number)
+	@Authorized('vendor', 'customer', 'HiTable')
 	getUserWalletBalance(@Ctx() ctx: MyContext, @Arg('currencyCode') currencyCode: string) {
 		const data = {
 			userId: ctx.req.user?.userId as string,
@@ -25,6 +26,23 @@ export class WalletResolver extends TransactionsDatasource {
 		return this.getWalletBalance(data);
 	}
 	
+	
+	@Query(() => WalletType)
+	@Authorized('vendor', 'customer', 'HiTable')
+	getUserWalletDetails(@Ctx() ctx: MyContext, @Arg('currencyCode') currencyCode: string) {
+		const data = {
+			userId: ctx.req.user?.userId as string,
+			walletCurrencyCode: currencyCode
+		}
+		return this.getWalletDetails(data);
+	}
+	
+	
+	@Query(() => [WalletType])
+	@Authorized('vendor', 'customer', 'HiTable')
+	getAllUserActiveWallets(@Ctx() ctx: MyContext) {
+		return this.getAllWallet({userId: ctx.req.user?.userId as string});
+	}
 	
 
 	@Authorized()
