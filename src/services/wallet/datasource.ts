@@ -12,6 +12,8 @@ class walletDatasource extends Base {
 		await __Wallet.create({
 			userId,
 			walletCurrencyCode,
+			walletCurrencySymbol:masterWalletSettings.walletCurrencySymbol,
+			walletCurrencyName:masterWalletSettings.walletCurrencyName,
 			balance: 0,
 		});
 		return 'Wallet created';
