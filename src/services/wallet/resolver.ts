@@ -3,7 +3,7 @@ import TransactionsDatasource from './datasource';
 import { walletToWalletTransferInput } from './type';
 
 @Resolver()
-export class TransactionsResolver extends TransactionsDatasource {
+export class WalletResolver extends TransactionsDatasource {
 	@Authorized('vendor', 'customer', 'HiTable')
 	@Mutation(() => String)
 	createUserWallet(@Ctx() ctx: MyContext, @Arg('currencyCode') currencyCode: string) {

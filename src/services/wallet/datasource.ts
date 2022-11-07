@@ -1,6 +1,4 @@
 import Base from '../../base';
-import { ObjectID } from 'typeorm';
-import { ObjectId } from 'mongodb';
 import MasterDatasource from '../masters/datasource';
 import { ValidationError } from 'apollo-server-express';
 import __Wallet from '../../model/wallet/wallet.model';
