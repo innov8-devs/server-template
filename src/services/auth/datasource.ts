@@ -1,6 +1,10 @@
 import Base from "../../base";
 import axiosBase from '../../helper/axiosBase';
 import { AuthenticationError } from 'apollo-server-express';
+import { ObjectId } from 'mongoose';
+import { IFullUser } from '../../types';
+
+
 
 class AuthDatasource extends Base {
 	async accountLogin(user:{email:string, password:string}){
@@ -22,7 +26,7 @@ class AuthDatasource extends Base {
 			})
 		})
 	}
-	async getCurrentUser():Promise<any> {
+	async getCurrentUser():Promise<IFullUser> {
 		return new Promise(async (resolve, reject) => {
 			axiosBase.get('/profile').then((data)=>{
 				resolve(data.data)

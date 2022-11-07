@@ -1,20 +1,18 @@
 import Base from '../../base';
-import {Pin} from '../../Entities/pin';
-import { ObjectID } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import Pin from '../../model/security/pin.model';
 
 class SecurityDatasource extends Base {
 	async createTransactionPin(pin: number, userId: string) {
-		const oldPin = await Pin.findOneBy({ userId: new ObjectId(userId) as unknown as ObjectID });
+		const oldPin = await Pin.findOne({ userId });
 		if (!oldPin) {
-			const newPin = new Pin();
-			newPin.pin = pin;
-			newPin.userId = userId as unknown as ObjectID;
-			await Pin.save(newPin);
+			await Pin.create({
+				pin,
+				userId
+			});
 			return 'Pin created';
 		}
 		oldPin.pin = pin;
-		await Pin.save(oldPin);
+		await oldPin.save();
 		return 'Pin updated';
 	}
 

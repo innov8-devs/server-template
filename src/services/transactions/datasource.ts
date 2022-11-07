@@ -1,64 +1,104 @@
 import Base from '../../base';
-import { wallet } from '../../Entities/wallet';
-import { Pin } from '../../Entities/pin';
+import __Transactions, { ITransaction } from '../../model/transactions/transactions.model';
 import { ObjectID } from 'typeorm';
 import { ObjectId } from 'mongodb';
-import { walletToWalletTransferInput } from './type';
+import __Wallet from '../../model/wallet/wallet.model';
+import MasterDatasource from '../masters/datasource';
+import * as Crypto from 'crypto';
+import AuthDatasource from '../auth/datasource';
+import { allowedWalletServices } from '../../model/mastersWalletSetting/mastersWalletSetting.type';
+import { ValidationError } from 'apollo-server-express';
 
 class transactionsDatasource extends Base {
-	async createWallet(userId: string) {
-		const userWallet = await wallet.findOneBy({ userId: new ObjectId(userId) as unknown as ObjectID });
+	
+	async initTransaction(transactionData: ITransaction & {service: allowedWalletServices}) {
+		const user = await new AuthDatasource().getCurrentUser();
+		const {
+			transactionAmount,
+			narration,
+			transactionType,
+		} = transactionData;
+		
+		const transactionCode = Crypto.randomBytes(16).toString('hex').toString();
+		// const masterWalletSettings = await new MasterDatasource().getAvailableWalletServicesForUsersByCurrencyCode();
+		
+		
+		await __Transactions.create({
+			userId: user._id,
+			transactionId: transactionCode,
+			transactionType: transactionType,
+			openingBalance: 0,
+			transactionAmount: transactionAmount,
+			transactionCurrency: 'NGN',
+			transactionCurrencyCode: 0,
+			transactionCurrencySymbol: '$',
+			transactionCurrencyName: 'Naira',
+			transactionCountryId: user.country,
+			closingBalance: 0,
+			narration: narration
+		});
+		return {
+			txtRef: transactionCode,
+		};
+		// const newTransaction = new __Transactions();
+		// newTransaction.userId = userId as unknown as ObjectID;
+		// return newTransaction;
+	}
+	
+	async createWallet({userId, walletCurrencyCode}: { userId: string, walletCurrencyCode: string }) {
+		const masterWalletSettings = await new MasterDatasource().getAvailableWalletServicesForUsersByCurrencyCode(walletCurrencyCode);
+		if(!masterWalletSettings) throw new ValidationError('Unable to validate currency')
+		const userWallet = await __Wallet.findOne({ userId: userId, walletCurrencyCode });
 		if (userWallet) return Promise.reject('Wallet already exists');
-		const newWallet = new wallet();
-		newWallet.userId = userId as unknown as ObjectID;
-		await wallet.save(newWallet);
+		await __Wallet.create({
+			userId,
+			walletCurrencyCode,
+			balance: 0,
+		});
 		return 'Wallet created';
 	}
-
+	
 	async getWalletBalance(userId: string) {
-		const userWallet = await wallet.findOneBy({ userId: new ObjectId(userId) as unknown as ObjectID });
-		if (!userWallet) return Promise.reject('Wallet does not exist');
-		return userWallet.balance;
+	
 	}
-
-	async walletToWalletTransfer({ recipient,amount, pinNumber }:walletToWalletTransferInput, sender: string) {
-		const pinValid = await Pin.findOneBy({ userId: new ObjectId(sender) as unknown as ObjectID, pin:pinNumber });
-		if (!pinValid) return Promise.reject('Invalid pin');
-		const fromUserWallet = await wallet.findOneBy({ userId: new ObjectId(sender) as unknown as ObjectID });
-		const toUserWallet = await wallet.findOneBy({ userId: new ObjectId(recipient) as unknown as ObjectID });
-		if (!fromUserWallet || !toUserWallet) return Promise.reject('Wallet does not exist');
-		if (fromUserWallet.balance < amount) return Promise.reject('Insufficient funds');
-		fromUserWallet.balance -= amount;
-		toUserWallet.balance += amount;
-		await wallet.save(fromUserWallet);
-		await wallet.save(toUserWallet);
-		return 'Transfer successful';
-	}
-
+	
+	// async __WalletToWalletTransfer({ recipient, amount, pinNumber }: __WalletToWalletTransferInput, sender: string) {
+		// const pinValid = await Pin.findOneBy({ userId: new ObjectId(sender) as unknown as ObjectID, pin:pinNumber });
+		// if (!pinValid) return Promise.reject('Invalid pin');
+		// const fromUserWallet = await __Wallet.findOneBy({ userId: new ObjectId(sender) as unknown as ObjectID });
+		// const toUserWallet = await __Wallet.findOneBy({ userId: new ObjectId(recipient) as unknown as ObjectID });
+		// if (!fromUserWallet || !toUserWallet) return Promise.reject('Wallet does not exist');
+		// if (fromUserWallet.balance < amount) return Promise.reject('Insufficient funds');
+		// fromUserWallet.balance -= amount;
+		// toUserWallet.balance += amount;
+		// await __Wallet.save(fromUserWallet);
+		// await __Wallet.save(toUserWallet);
+		// return 'Transfer successful';
+	// }
+	
 	async fundWalletWithStripePaymentLink(userId: string, amount: number, pin: number) {
-		const userWallet = await wallet.findOneBy({ userId: new ObjectId(userId) as unknown as ObjectID });
+		const userWallet = await __Wallet.findOne({ userId: new ObjectId(userId) as unknown as ObjectID });
 		if (!userWallet) return Promise.reject('Wallet does not exist');
 		// Stripe payment link logic here
-
+		
 		// End of stripe payment link logic
 		return 'Payment link generated';
-
+		
 	}
-
-	async walletToBankTransfer(userId: string, amount: number, pin: number) {
-		const userWallet = await wallet.findOneBy({ userId: new ObjectId(userId) as unknown as ObjectID });
+	
+	async __WalletToBankTransfer(userId: string, amount: number, pin: number) {
+		const userWallet = await __Wallet.findOne({ userId: new ObjectId(userId) as unknown as ObjectID });
 		if (!userWallet) return Promise.reject('Wallet does not exist');
 		if (userWallet.balance < amount) return Promise.reject('Insufficient funds');
 		userWallet.balance -= amount;
 		// Bank transfer logic here
-
+		
 		// End of bank transfer logic
-		await wallet.save(userWallet);
-		return 'Transfer successful';
+		// await __Wallet.save(userWallet);
+		return 'Transfer successful'; // return transaction reference
 	}
-
-
-
+	
+	
 }
 
 
