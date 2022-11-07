@@ -2,6 +2,8 @@ import { ObjectId } from 'mongoose';
 
 type gender = "male" | "female" | "other";
 
+
+
 interface IFullUser {
 	_id: ObjectId;
 	email: string;
@@ -33,12 +35,6 @@ interface IFullUser {
 	verifiedAt: Date
 }
 
-interface IUser {
-	userId: string;
-	email: string;
-	verified?: boolean;
-	role: "vendor" | "customer" | "HiTable";
-	verifiedAt?: Date;
-}
+
 
 type PLAY_GROUND_MODE = "yes" | "no"
