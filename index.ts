@@ -1,7 +1,7 @@
 import { customAuthChecker } from './src/helper/AuthHandler/CustomAuthChecker';
+import "reflect-metadata";
 require('dotenv').config()
 import express, {Application} from "express";
-import ormConfig from "./src/ormConfig";
 import cors from "./src/tools/cors";
 import { isDev, PLAY_GROUND } from './src/tools/config';
 import includeUser from "./src/helper/IncludeUser";
@@ -18,7 +18,6 @@ import resolvers from "./src/resolvers";
 import MongoConfig from './src/config/mongoConfig';
 
 new MongoConfig().connect();
-ormConfig()
 
 const devOrigins: Array<string> = ["http://localhost:3002"]
 const Origins: Array<string> = ["https://highypay.com", "https://www.highpay.com", "https://gateway-dev.hipay.finance"]

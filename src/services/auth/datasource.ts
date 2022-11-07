@@ -1,7 +1,6 @@
 import Base from "../../base";
 import axiosBase from '../../helper/axiosBase';
 import { AuthenticationError } from 'apollo-server-express';
-import { ObjectId } from 'mongoose';
 import { IFullUser } from '../../types';
 
 

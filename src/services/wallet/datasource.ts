@@ -1,6 +1,4 @@
 import Base from '../../base';
-import { ObjectID } from 'typeorm';
-import { ObjectId } from 'mongodb';
 import MasterDatasource from '../masters/datasource';
 import { ValidationError } from 'apollo-server-express';
 import __Wallet from '../../model/wallet/wallet.model';
@@ -17,6 +15,11 @@ class walletDatasource extends Base {
 			balance: 0,
 		});
 		return 'Wallet created';
+	}
+	async getWalletBalance({userId, walletCurrencyCode}: { userId: string, walletCurrencyCode: string }) {
+		const userWallet = await __Wallet.findOne({ userId: userId, walletCurrencyCode });
+		if (!userWallet) return Promise.reject('Wallet does not exist');
+		return userWallet.balance;
 	}
 }
 

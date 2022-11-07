@@ -1,7 +1,6 @@
 import Base from '../../base';
 import __Transactions, { ITransaction } from '../../model/transactions/transactions.model';
-import { ObjectID } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import { ObjectId } from 'mongoose';
 import __Wallet from '../../model/wallet/wallet.model';
 import MasterDatasource from '../masters/datasource';
 import * as Crypto from 'crypto';
@@ -45,10 +44,6 @@ class transactionsDatasource extends Base {
 		// return newTransaction;
 	}
 	
-	async getWalletBalance(userId: string) {
-	
-	}
-	
 	// async __WalletToWalletTransfer({ recipient, amount, pinNumber }: __WalletToWalletTransferInput, sender: string) {
 		// const pinValid = await Pin.findOneBy({ userId: new ObjectId(sender) as unknown as ObjectID, pin:pinNumber });
 		// if (!pinValid) return Promise.reject('Invalid pin');
@@ -64,7 +59,7 @@ class transactionsDatasource extends Base {
 	// }
 	
 	async fundWalletWithStripePaymentLink(userId: string, amount: number, pin: number) {
-		const userWallet = await __Wallet.findOne({ userId: new ObjectId(userId) as unknown as ObjectID });
+		const userWallet = await __Wallet.findOne({ userId });
 		if (!userWallet) return Promise.reject('Wallet does not exist');
 		// Stripe payment link logic here
 		
@@ -74,7 +69,7 @@ class transactionsDatasource extends Base {
 	}
 	
 	async __WalletToBankTransfer(userId: string, amount: number, pin: number) {
-		const userWallet = await __Wallet.findOne({ userId: new ObjectId(userId) as unknown as ObjectID });
+		const userWallet = await __Wallet.findOne({ userId });
 		if (!userWallet) return Promise.reject('Wallet does not exist');
 		if (userWallet.balance < amount) return Promise.reject('Insufficient funds');
 		userWallet.balance -= amount;
