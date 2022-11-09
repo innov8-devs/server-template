@@ -9,6 +9,9 @@ export class walletToWalletTransferInput {
 	@Field(() => ID, { description: 'recipient user id' })
 	recipient: string;
 	
+	@Field({ description: 'Transaction wallet' })
+	walletCurrencyCode: string;
+	
 	@Field({ description: 'Transaction pin of sender' })
 	pinNumber: number;
 }
