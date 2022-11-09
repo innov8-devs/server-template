@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongoose';
 
 export interface IPin {
-	pin: number;
+	pin: string | number;
 	userId: ObjectId;
 }
 

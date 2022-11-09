@@ -5,7 +5,7 @@ import SecurityDatasource from './datasource';
 export class SecurityResolver extends SecurityDatasource {
 	@Authorized('vendor', 'customer', 'HiTable')
 	@Mutation(() => String)
-	createPin(@Arg('pin') pin: number, @Ctx() ctx: MyContext) {
+	createPin(@Arg('pin') pin: string, @Ctx() ctx: MyContext) {
 		return this.createTransactionPin(pin, ctx.req.user?.userId as string);
 	}
 }

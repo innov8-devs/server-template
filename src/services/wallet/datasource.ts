@@ -30,10 +30,11 @@ class walletDatasource extends Base {
 	}
 	async walletToWalletTransfer({ recipient, amount, pinNumber,walletCurrencyCode }: walletToWalletTransferInput, sender: string) {
 		const pinValid = await __Pin.findOne({ userId: sender, pin: pinNumber });
-		if (!pinValid) return Promise.reject('Invalid pin');
+		if (!pinValid) throw new ValidationError('Invalid pin');
 		const fromUserWallet = await __Wallet.findOne({ userId: sender,walletCurrencyCode });
+		if (!fromUserWallet) throw new ValidationError(`Senders Wallet for ${walletCurrencyCode} does not exist`);
 		const toUserWallet = await __Wallet.findOne({ userId: recipient, walletCurrencyCode });
-		if (!fromUserWallet || !toUserWallet) throw new ValidationError('Wallet does not exist');
+		if (!toUserWallet) throw new ValidationError(`Recipient's Wallet for ${walletCurrencyCode} does not exist`);
 		if (fromUserWallet.balance < amount) throw new ValidationError('Insufficient funds');
 		fromUserWallet.balance -= amount;
 		toUserWallet.balance += amount;

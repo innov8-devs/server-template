@@ -2,7 +2,7 @@ import Base from '../../base';
 import Pin from '../../model/security/pin.model';
 
 class SecurityDatasource extends Base {
-	async createTransactionPin(pin: number, userId: string) {
+	async createTransactionPin(pin: string, userId: string) {
 		const oldPin = await Pin.findOne({ userId });
 		if (!oldPin) {
 			await Pin.create({
