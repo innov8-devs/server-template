@@ -1,4 +1,4 @@
-import { Authorized, Field, InputType, ObjectType, registerEnumType } from 'type-graphql';
+import { Authorized, Field, ID, InputType, ObjectType, registerEnumType } from 'type-graphql';
 import { IsEmail, Length } from 'class-validator';
 
 enum Gender {
@@ -151,6 +151,9 @@ export class updatePasswordInput {
 
 @ObjectType({ description: 'User Profile' })
 export class userProfile {
+	@Field(()=> ID,{ description: 'User Id' })
+	_id: string;
+	
 	@IsEmail()
 	@Field({ description: 'User email address' })
 	email: string;
