@@ -48,7 +48,7 @@ export class WalletResolver extends TransactionsDatasource {
 	@Authorized('vendor', 'customer', 'HiTable')
 	@Mutation(() => String)
 	makeWalletToWalletTransfer(@Arg('data') data: walletToWalletTransferInput, @Ctx() ctx: MyContext) {
-		// return this.walletToWalletTransfer(data, ctx.req.user?.userId as string);
+		return this.walletToWalletTransfer(data, ctx.req.user?.userId as string);
 	}
 
 	@Authorized()
