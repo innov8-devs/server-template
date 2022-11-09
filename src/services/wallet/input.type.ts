@@ -1,4 +1,4 @@
-import { Field, InputType } from 'type-graphql';
+import { Field, ID, InputType } from 'type-graphql';
 import { Length } from 'class-validator';
 
 
@@ -7,10 +7,10 @@ export class walletToWalletTransferInput {
 	@Length(1)
 	@Field({ description: 'Transfer amount' })
 	amount: number;
-
-	@Field({ description: 'recipient user id' })
+	
+	@Field(() => ID, { description: 'recipient user id' })
 	recipient: string;
-
+	
 	@Field({ description: 'Transaction pin of sender' })
 	pinNumber: number;
 }

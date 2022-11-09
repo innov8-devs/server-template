@@ -53,19 +53,7 @@ class transactionsDatasource extends Base {
 		// return newTransaction;
 	}
 	
-	async walletToWalletTransfer({ recipient, amount, pinNumber }: walletToWalletTransferInput, sender: string) {
-		const pinValid = await __Pin.findOne({ userId: sender, pin: pinNumber });
-		if (!pinValid) return Promise.reject('Invalid pin');
-		const fromUserWallet = await __Wallet.findOne({ userId: sender });
-		const toUserWallet = await __Wallet.findOne({ userId: recipient });
-		if (!fromUserWallet || !toUserWallet) return Promise.reject('Wallet does not exist');
-		if (fromUserWallet.balance < amount) return Promise.reject('Insufficient funds');
-		fromUserWallet.balance -= amount;
-		toUserWallet.balance += amount;
-		await fromUserWallet.save();
-		await toUserWallet.save();
-		return 'Transfer successful';
-	}
+
 	
 	async fundWalletWithStripePaymentLink(userId: string, amount: number, pin: number) {
 		const userWallet = await __Wallet.findOne({ userId });
