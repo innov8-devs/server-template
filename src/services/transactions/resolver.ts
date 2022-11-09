@@ -1,6 +1,5 @@
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import TransactionsDatasource from './datasource';
-import { walletToWalletTransferInput } from './type';
 
 @Resolver()
 export class TransactionsResolver extends TransactionsDatasource {
