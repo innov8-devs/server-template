@@ -20,7 +20,7 @@ import MongoConfig from './src/config/mongoConfig';
 new MongoConfig().connect();
 
 const devOrigins: Array<string> = ["http://localhost:3002"]
-const Origins: Array<string> = ["https://highypay.com", "https://www.highpay.com", "https://gateway-dev.hipay.finance"]
+const Origins: Array<string> = ["https://highypay.finance", "https://www.highpay.finance", "https://gateway-dev.hipay.finance",'https://staging.hipay.finance']
 if (isDev) {
 	Origins.push(...devOrigins)
 }
