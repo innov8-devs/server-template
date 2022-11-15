@@ -15,6 +15,7 @@ export const {
 	JWT_SECRET,
 	OBS,
 	DOMAIN,
+	STRIPE_SECRET_KEY,
   PLAY_GROUND,
 } = process.env
 
@@ -26,6 +27,7 @@ const envs = {
 	MAIL_PORT,
 	DOMAIN,
 	MAIL_USER,
+	STRIPE_SECRET_KEY,
 	MONGO_URL,
 	BASE_AUTH_URL,
 	BUCKET,

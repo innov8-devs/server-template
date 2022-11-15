@@ -1,22 +1,20 @@
 import Base from '../../base';
-import __Transactions, { ITransaction } from '../../model/transactions/transactions.model';
+import __Transactions from '../../model/transactions/transactions.model';
 import __Wallet from '../../model/wallet/wallet.model';
 import * as Crypto from 'crypto';
 import AuthDatasource from '../auth/datasource';
-import { allowedWalletServices } from '../../model/mastersWalletSetting/mastersWalletSetting.type';
 import MasterDatasource from '../masters/datasource';
-import { walletToWalletTransferInput } from '../wallet/input.type';
-import __Pin from '../../model/security/pin.model';
+import { ValidationError } from 'apollo-server-express';
 
 class transactionsDatasource extends Base {
 	
-	async initTransaction(transactionData: ITransaction & { service: allowedWalletServices }) {
+	async createTransactionInit(transactionData: any) {
 		const user = await new AuthDatasource().getCurrentUser();
 		const {
 			transactionAmount,
 			narration,
 			transactionCurrencyCode,
-			transactionCurrency,
+			stripData,
 			transactionType,
 		} = transactionData;
 		
@@ -31,52 +29,58 @@ class transactionsDatasource extends Base {
 		
 		const closingBalance = transactionType === 'deposit' ? wallet.balance + transactionAmount : wallet.balance - transactionAmount;
 		
-		await __Transactions.create({
+		const transaction = await __Transactions.create({
 			userId: user._id,
 			transactionId: transactionCode,
 			transactionType: transactionType,
 			openingBalance: wallet.balance,
 			transactionAmount,
-			transactionCurrency,
+			stripData,
+			transactionCurrency: wallet.walletCurrencyName,
 			transactionCurrencyCode: wallet.walletCurrencyCode,
 			transactionCurrencySymbol: wallet.walletCurrencySymbol,
-			transactionCurrencyName: wallet.walletCurrencyName,
-			transactionCountryId: user.country,
 			closingBalance: closingBalance,
 			narration: narration
 		});
+		
 		return {
+			_id: transaction._id,
 			txtRef: transactionCode,
 		};
-		// const newTransaction = new __Transactions();
-		// newTransaction.userId = userId as unknown as ObjectID;
-		// return newTransaction;
 	}
 	
-
-	
-	async fundWalletWithStripePaymentLink(userId: string, amount: number, pin: number) {
-		const userWallet = await __Wallet.findOne({ userId });
-		if (!userWallet) return Promise.reject('Wallet does not exist');
-		// Stripe payment link logic here
+	async initFundWalletWithStripe({
+																	 amount,
+																	 walletCurrencyCode
+																 }: { walletCurrencyCode: string, amount: number }, userId: string) {
+		const userWallet = await __Wallet.findOne({ userId, walletCurrencyCode });
+		if (!userWallet) throw new ValidationError('Wallet does not exist');
+		if (walletCurrencyCode === 'NGN') throw new ValidationError(`Cannot fund wallet ${walletCurrencyCode} with stripe`);
+		const stripInit = await this.stripPayInit({
+			amount,
+			currency: userWallet.walletCurrencyCode,
+			description: 'Wallet funding',
+			metadata: {
+				userId: userId,
+				transactionType: 'deposit',
+				walletCurrencyCode: userWallet.walletCurrencyCode
+			}
+		});
+		const transactionInit = await this.createTransactionInit({
+			transactionAmount: amount,
+			transactionType: 'deposit',
+			stripData: stripInit,
+			narration: 'Deposit via stripe',
+			transactionCurrencyCode: userWallet.walletCurrencyCode,
+		});
 		
-		// End of stripe payment link logic
-		return 'Payment link generated';
+		return {
+			stripClientSecret: stripInit.client_secret,
+			transactionInit: transactionInit.txtRef,
+			stripPaymentIntentId: stripInit.id,
+		};
 		
 	}
-	
-	async __WalletToBankTransfer(userId: string, amount: number, pin: number) {
-		const userWallet = await __Wallet.findOne({ userId });
-		if (!userWallet) return Promise.reject('Wallet does not exist');
-		if (userWallet.balance < amount) return Promise.reject('Insufficient funds');
-		userWallet.balance -= amount;
-		// Bank transfer logic here
-		
-		// End of bank transfer logic
-		// await __Wallet.save(userWallet);
-		return 'Transfer successful'; // return transaction reference
-	}
-	
 	
 }
 
