@@ -70,19 +70,19 @@ export class createAccountInput {
 	@Field({ description: 'User email address' })
 	email: string;
 	
-	@Length(6, 20)
+	@Length(6, 30)
 	@Field({ description: 'User password' })
 	password: string;
 	
-	@Length(3, 20)
+	@Length(3, 15)
 	@Field({ description: 'user firstname' })
 	firstName: string;
 	
-	@Length(3, 20)
+	@Length(3, 15)
 	@Field({ description: 'user lastname' })
 	lastName: string;
 	
-	@Length(3, 20)
+	@Length(3, 30)
 	@Field({ description: 'user username' })
 	username: string;
 	
@@ -178,6 +178,9 @@ export class userProfile {
 	
 	@Field({ description: 'user date of birth' })
 	dob?: string;
+	
+	@Field({ description: 'country' })
+	country?: string;
 	
 	@Field({ description: 'user profile image' })
 	profileImage?: string;

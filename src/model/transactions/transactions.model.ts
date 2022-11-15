@@ -1,4 +1,5 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, PaginateModel } from 'mongoose';
+import paginate from 'mongoose-paginate-v2';
 import { ITransactionDocument, ITransaction } from './transaction.type';
 
 const transactions = new Schema<ITransactionDocument>({
@@ -41,15 +42,13 @@ const transactions = new Schema<ITransactionDocument>({
 		type: String,
 		required: true
 	},
-	transactionCurrencyName: {
+	transactionCurrency: {
 		type: String,
 		required: true,
 		index: true
 	},
-	transactionCountryId: {
-		type: Schema.Types.ObjectId,
-		required: true,
-		index: true
+	stripTransactionId: {
+		type: String,
 	},
 	closingBalance: {
 		type: Number,
@@ -59,13 +58,17 @@ const transactions = new Schema<ITransactionDocument>({
 		type: String,
 		required: true
 	},
-	transactionCountryName: {
-		type: String,
-		required: true
+	stripData: {
+		type: Object,
+	},
+	apiRes: {
+		type:Schema.Types.Mixed,
 	},
 	
 }, {
 	timestamps: true
 });
-export default model<ITransactionDocument>('Transactions', transactions);
+
+transactions.plugin(paginate);
+export default model<ITransactionDocument, PaginateModel<ITransaction>>('Transactions', transactions);
 export { ITransaction, ITransactionDocument };

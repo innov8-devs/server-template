@@ -1,5 +1,6 @@
 import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql';
 import AuthDatasource from './datasource';
+
 import {
 	adminCreateAccountInput,
 	createAccountInput,
@@ -10,6 +11,9 @@ import {
 	updateAccountInput, updatePasswordInput,
 	userProfile
 } from './type';
+import UtilsDatasource from '../utils/datasource';
+import Wallet from '../wallet/datasource';
+import axiosBase from '../../helper/axiosBase';
 
 @Resolver()
 export class AuthResolver extends AuthDatasource {
@@ -32,7 +36,16 @@ export class AuthResolver extends AuthDatasource {
 
 	@Mutation(() => String)
 	async createUser(@Arg('data') data: createAccountInput) {
-		return this.createNewAccount(data);
+		const userData = await this.createNewAccount(data);
+		const { customer } = userData;
+		const country = await new UtilsDatasource().getACountry(customer.country.toString());
+		axiosBase.defaults.headers.common['userid'] = customer._id
+		const payload = {
+			userId: customer._id,
+			walletCurrencyCode: country.currencyCode,
+		};
+		await new Wallet().createWallet(payload);
+		return "Account created successfully";
 	}
 	
 	@Authorized( "HiTable")
