@@ -88,6 +88,9 @@ class Base extends BaseWallet {
 			description
 		});
 	}
+	async stripPayConfirm(paymentIntentId: string) {
+		return await stripeClient.paymentIntents.confirm(paymentIntentId);
+	}
 }
 
 export default Base;
