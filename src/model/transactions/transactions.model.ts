@@ -21,7 +21,7 @@ const transactions = new Schema<ITransactionDocument>({
 	},
 	transactionStatus: {
 		type: String,
-		enum: ['pending', 'failed', 'completed', 'canceled'],
+		enum: ['pending', 'failed', 'success', 'canceled'],
 		default: 'pending',
 		required: true,
 		index: true

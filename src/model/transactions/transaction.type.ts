@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose';
 
-type transactionStatus = "pending" | "failed" | "completed" | "canceled";
+type transactionStatus = "pending" | "failed" | "success" | "canceled";
 type transactionType = "deposit" | "withdrawal" | "transfer"
 
 export interface ITransaction {
