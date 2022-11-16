@@ -1,7 +1,11 @@
-import { Arg, Authorized, Ctx, Mutation, Resolver } from 'type-graphql';
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import TransactionsDatasource from './datasource';
-import { initFundWalletWithStripInput } from './type';
-import { initFundWalletWithStripType } from './input.type';
+import {
+	initFundWalletWithStripType,
+	initFundWalletWithStripInput,
+	confirmFundWalletWithStripInput, getTransactionListInput
+} from './input.type';
+import { TransactionsType } from './type';
 
 
 @Resolver()
@@ -15,11 +19,14 @@ export class TransactionsResolver extends TransactionsDatasource {
 	
 	@Authorized('vendor', 'customer', 'HiTable')
 	@Mutation(() => initFundWalletWithStripType)
-	userConfirmFundWalletWithStrip(@Arg('data') data: {
-		transactionId: string,
-		paymentIntentId: string
-	}, @Ctx() ctx: MyContext) {
+	userConfirmFundWalletWithStrip(@Arg('data') data: confirmFundWalletWithStripInput, @Ctx() ctx: MyContext) {
 		return this.confirmFundWalletWithStrip(data.transactionId, data.paymentIntentId, ctx.req.user?.userId as string);
+	}
+	
+	@Authorized('vendor', 'customer', 'HiTable')
+	@Query(() => TransactionsType)
+	getUserTransactions(@Arg("data") data:getTransactionListInput, @Ctx() ctx: MyContext) {
+		return this.getTransactions(data, ctx.req.user?.userId as string);
 	}
 	
 }

@@ -22,7 +22,6 @@ const transactions = new Schema<ITransactionDocument>({
 	transactionStatus: {
 		type: String,
 		enum: ['pending', 'failed', 'success', 'canceled'],
-		default: 'pending',
 		required: true,
 		index: true
 	},
@@ -41,6 +40,10 @@ const transactions = new Schema<ITransactionDocument>({
 	transactionCurrencySymbol: {
 		type: String,
 		required: true
+	},
+	transactionGroupId: {
+		type: String,
+		index: true
 	},
 	transactionCurrency: {
 		type: String,

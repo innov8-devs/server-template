@@ -7,6 +7,10 @@ import { AllowedWalletServices } from './services/masters/type';
 import { allowedWalletServices } from './model/mastersWalletSetting/mastersWalletSetting.type';
 import BaseWallet from './services/wallet/BaseWallet';
 import Stripe from 'stripe';
+import AuthDatasource from './services/auth/datasource';
+import Crypto from 'crypto';
+import MasterDatasource from './services/masters/datasource';
+import __Transactions from './model/transactions/transactions.model';
 
 const stripeClient = new Stripe(STRIPE_SECRET_KEY as string, {
 	apiVersion: '2022-08-01',

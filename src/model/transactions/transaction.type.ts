@@ -1,13 +1,27 @@
 import { ObjectId } from 'mongoose';
 
-type transactionStatus = "pending" | "failed" | "success" | "canceled";
-type transactionType = "deposit" | "withdrawal" | "transfer"
+// type transactionStatus = "pending" | "failed" | "success" | "canceled";
+// type transactionType = "deposit" | "withdrawal" | "transfer"
+
+enum transactionStatus {
+	pending = 'pending',
+	failed = 'failed',
+	success = 'success',
+	canceled = 'canceled'
+}
+
+enum transactionType {
+	deposit = 'deposit',
+	withdrawal = 'withdrawal',
+	transfer = 'transfer',
+}
 
 export interface ITransaction {
 	userId: ObjectId;
 	transactionId: string;
 	transactionType: transactionType;
 	transactionStatus: transactionStatus;
+	transactionGroupId?: string;
 	openingBalance: number;
 	transactionAmount: number;
 	transactionCurrency: string;
@@ -22,11 +36,5 @@ export interface ITransaction {
 	stripTransactionId: string;
 }
 
-// export interface ITransactionInputPayLoad {
-// 	transactionAmount
-// 	narration
-// 	transactionCurrencyCode
-// 	transactionType
-// }
-
-export interface ITransactionDocument extends ITransaction, Document {}
+export interface ITransactionDocument extends ITransaction, Document {
+}
