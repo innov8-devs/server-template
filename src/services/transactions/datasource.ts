@@ -44,29 +44,32 @@ class transactionsDatasource extends Base {
 	async confirmFundWalletWithStrip(transactionId: string, paymentIntentId: string, userId: string) {
 		const transaction = await __Transactions.findOne({ transactionId, userId });
 		if (!transaction) throw new ValidationError('Transaction does not exist');
+		
 		const userWallet = await __Wallet.findOne({
 			userId: transaction.userId,
 			walletCurrencyCode: transaction.transactionCurrencyCode
 		});
 		if (!userWallet) throw new ValidationError('Wallet does not exist');
+		
 		const stripConfirm = await this.stripPayConfirm(paymentIntentId);
+		const closingBalance = userWallet.balance + transaction.transactionAmount;
+		const openingBalance = userWallet.balance;
 		if (stripConfirm.status === 'succeeded') {
-			const closingBalance = userWallet.balance + transaction.transactionAmount;
-			const openingBalance = userWallet.balance;
 			userWallet.balance = userWallet.balance + transaction.transactionAmount;
 			await userWallet.save();
-			await __Transactions.updateOne({ _id: transaction._id }, {
-				$set: {
-					status: 'success',
-					openingBalance,
-					closingBalance
-				}
-			});
-			return 'success';
 		}
+		await __Transactions.updateOne({ _id: transaction._id }, {
+			$set: {
+				status: stripConfirm.status === 'succeeded' ? 'success' : 'failed',
+				openingBalance,
+				closingBalance
+			}
+		});
+		if (stripConfirm.status === 'succeeded') return 'Wallet funded successfully';
+		throw new ValidationError('Transaction failed');
 	}
 	
-	async getTransactions({ page, limit }: { page: number, limit?: number } , userId: string) {
+	async getTransactions({ page, limit }: { page: number, limit?: number }, userId: string) {
 		const options = {
 			page,
 			limit: limit || 30,
