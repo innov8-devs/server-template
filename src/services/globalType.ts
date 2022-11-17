@@ -8,24 +8,24 @@ export class PaginationType {
 	@Field({ description: 'Limit of the total number' })
 	limit: number;
 	
-	@Field({ description: 'Current pages' })
+	@Field({ description: 'Current pages', nullable: true })
 	page: number;
 	
-	@Field({ description: 'Total number of pages' })
-	totalPages: number;
+	@Field({ description: 'Total number of pages', nullable: true })
+	totalPages?: number;
 	
-	@Field({ description: 'Has next page' })
-	hasNextPage: boolean;
+	@Field({ description: 'Has next page', nullable: true})
+	hasNextPage?: boolean;
 	
-	@Field({ description: 'Next page' })
-	nextPage: number;
+	@Field({ description: 'Next page', nullable: true })
+	nextPage?: number;
 	
-	@Field({ description: 'Has previous page' })
-	hasPrevPage: boolean;
+	@Field({ description: 'Has previous page', nullable: true })
+	hasPrevPage?: boolean;
 	
-	@Field({ description: 'Previous page' })
-	prevPage: number;
+	@Field({ description: 'Previous page', nullable: true })
+	prevPage?: number;
 	
-	@Field({ description: 'pagingCounter' })
-	pagingCounter: number;
+	@Field({ description: 'pagingCounter', nullable: true })
+	pagingCounter?: number;
 }
