@@ -6,7 +6,6 @@ export const {
   MAIL_PASS,
   MAIL_USER,
   BASE_AUTH_URL,
-  APP_NAME,
   REGION,
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,
@@ -14,7 +13,6 @@ export const {
   JWT_SECRET,
   OBS,
   DOMAIN,
-  STRIPE_SECRET_KEY,
   PLAY_GROUND,
 } = process.env;
 
@@ -26,17 +24,10 @@ const envs = {
   MAIL_PORT,
   DOMAIN,
   MAIL_USER,
-  STRIPE_SECRET_KEY,
   MONGO_URL,
   BASE_AUTH_URL,
   BUCKET,
   OBS,
-  APP_NAME,
-  JWT_SECRET,
-  AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY,
-  REGION,
-  PLAY_GROUND,
 };
 
 const list = Object.keys(envs);
